@@ -1,7 +1,7 @@
 import { BasicService, UserAgent } from './lib'
-import { writeFileSync } from 'fs'
-import superagent from 'superagent'
 import { JSDOM } from 'jsdom'
+import superagent from 'superagent'
+import { writeFileSync } from 'fs'
 
 export class LuoguAccountService extends BasicService {
     constructor(
@@ -37,7 +37,7 @@ export class LuoguAccountService extends BasicService {
         if (autosave) writeFileSync(autosave, captcha, "binary");
         return captcha;
     }
-    login(username: string, password: string, captcha: string): Promise<Boolean> {
+    login(username: string, password: string, captcha: string): Promise<boolean> {
         return new Promise((resolve) =>
             this.post('/api/auth/userPassLogin')
                 .set('referer', 'https://www.luogu.com.cn/user/setting')
@@ -55,7 +55,7 @@ export class LuoguAccountService extends BasicService {
                 })
         );
     }
-    async autoLogin(username: string, password: string, retry: number = 2): Promise<Boolean> {
+    async autoLogin(username: string, password: string, retry: number = 2): Promise<boolean> {
         this.reset();
         const CaptchaFile = await this.getLoginCaptcha();
         const DataURL: string = 'data:image/jpeg;base64,' + CaptchaFile.toString('base64');
